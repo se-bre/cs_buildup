@@ -8,7 +8,7 @@ You will have the Cloudstack Management, Cloudstack Agent, NFS Server, MySQL Ser
 
 You need 2 disks:
  - one approx. 5 - 10 GB (root disk)
- - one additional disk for the NFS Storage (primary, secondary, template) approx. 20GB or more
+ - one additional disk for the NFS Storage (primary, secondary, template) approx. 30GB or more
 
 ### Howto
 
