@@ -14,7 +14,7 @@ You need 2 disks:
 
 you need all scripts from folder "scripts"  
 
-	apt-get install git
+	apt-get install git -y
 	git clone https://github.com/se-bre/cs_buildup.git
 
 make them executable
