@@ -28,7 +28,7 @@ echo ""
 cp -rp /usr/share/cloudstack-common/scripts/storage/secondary/* /mnt/stor-loc/
 mount -o bind /mnt/stor-loc /usr/share/cloudstack-common/scripts/storage/secondary
 #/usr/share/cloudstack-common/scripts/storage/secondary/cloud-install-sys-tmplt -m /mnt/secondary -u http://cloudstack.apt-get.eu/systemvm/4.5/systemvm64template-4.5-kvm.qcow2.bz2 -h kvm -F
-/usr/share/cloudstack-common/scripts/storage/secondary/cloud-install-sys-tmplt -m /mnt/secondary -u http://cloudstack.apt-get.eu/systemvm/CSVERSION/systemvm64template-CSVERSION-kvm.qcow2.bz2 -h kvm -F
+/usr/share/cloudstack-common/scripts/storage/secondary/cloud-install-sys-tmplt -m /mnt/secondary -u http://cloudstack.apt-get.eu/systemvm/PATHVERSION/systemvm64template-TMPLVERSION-kvm.qcow2.bz2 -h kvm -F
 cat <<EOF >> /etc/fstab
 /mnt/stor-loc /usr/share/cloudstack-common/scripts/storage/secondary bind bind 0 0
 EOF
