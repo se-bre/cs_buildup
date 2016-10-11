@@ -39,7 +39,7 @@ read -p "can we continue? [y/n]: " ANTWORT
     [nN]* ) echo "nothing done!"
             exit;;
     * )     echo ""
-            echo "Dude, just enter Y or N, please.";;
+            echo "Please, just enter Y or N, please.";;
   esac
 done
 echo "doing upgrade ... this could take a looong time"
@@ -82,7 +82,7 @@ mkdir -p /mnt/primary
 mkdir -p /mnt/secondary
 mkdir -p /mnt/stor-loc
 echo "step 2 - create partitions"
-parted /dev/vdb mktable msdos >> config.log 2>&1
+parted -s /dev/vdb mktable msdos >> config.log 2>&1
 parted /dev/vdb mkpart primary 1049kB 20% >> config.log 2>&1
 parted /dev/vdb mkpart primary 21% 60% >> config.log 2>&1
 parted /dev/vdb mkpart primary 61% 100% >> config.log 2>&1
