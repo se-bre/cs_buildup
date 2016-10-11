@@ -1,7 +1,7 @@
 # Cloudstack buildup - bash script
 
 **OS:** Ubuntu 14.04  
-**Cloudstack Version:** 4.5 (latest)  
+**Cloudstack Version:** 4.4 - 4.9 (latest subversion)  
 
 This script will build up an fully working Cloudstack.  
 You will have the Cloudstack Management, Cloudstack Agent, NFS Server, MySQL Server, KVM on one host.  
@@ -14,7 +14,8 @@ You need 2 disks:
 
 you need all scripts from folder "scripts"  
 
-	git clone 
+	apt-get install git
+	git clone https://github.com/se-bre/cs_buildup.git
 
 make them executable
 
