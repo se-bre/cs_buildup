@@ -228,5 +228,11 @@ iface mgmt inet static
 #        bridge_stp yes
 EOF
 echo ""
+echo "prepare SSHD"
+sed -i 's/PermitRootLogin\ without-password/PermitRootLogin\ yes/g' /etc/ssh/sshd_config
+echo ""
+echo "load Kernel modules"
+echo "kvm" >> /etc/modules
+echo ""
 echo "host is prepared for CloudStack installation!"
 echo ""
