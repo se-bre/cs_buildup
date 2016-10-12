@@ -141,7 +141,6 @@ do
   esac
 done
 echo ""
-echo "now you have to reboot this system!"
 echo ""
 echo "after the reboot you can start to configure cloudstack: "
 echo "$IPADDR:8080/client"
