@@ -190,36 +190,42 @@ iface eth0.103 inet manual
         vlan-raw-device eth0
 
 auto storage
-iface storage inet manual
-        bridge_ports eth0.103
-        bridge_fd 5
-        bridge_stp yes
-
-auto storage-hv
-iface storage-hv inet static
+#iface storage inet manual
+iface storage inet static
         address 172.18.1.$TNR
         netmask 255.255.0.0
         bridge_ports eth0.103
         bridge_fd 5
         bridge_stp yes
 
+#auto storage-hv
+#iface storage-hv inet static
+#        address 172.18.1.$TNR
+#        netmask 255.255.0.0
+#        bridge_ports eth0.103
+#        bridge_fd 5
+#        bridge_stp yes
+
 auto eth0.102
 iface eth0.102 inet manual
         vlan-raw-device eth0
 
 auto mgmt
-iface mgmt inet manual
-        bridge_ports eth0.102
-        bridge_fd 5
-        bridge_stp yes
-
-auto mgmt-hv
-iface mgmt-hv inet static
+#iface mgmt inet manual
+iface mgmt inet static
         address 172.17.1.$TNR
 	netmask 255.255.0.0
         bridge_ports eth0.102
         bridge_fd 5
         bridge_stp yes
+
+#auto mgmt-hv
+#iface mgmt-hv inet static
+#        address 172.17.1.$TNR
+#	netmask 255.255.0.0
+#        bridge_ports eth0.102
+#        bridge_fd 5
+#        bridge_stp yes
 EOF
 echo ""
 echo "host is prepared for CloudStack installation!"
