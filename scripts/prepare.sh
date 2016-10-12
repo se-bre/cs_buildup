@@ -233,6 +233,7 @@ sed -i 's/PermitRootLogin\ without-password/PermitRootLogin\ yes/g' /etc/ssh/ssh
 echo ""
 echo "load Kernel modules"
 echo "kvm" >> /etc/modules
+echo "kvm-intel" >> /etc/modules
 echo ""
 echo "host is prepared for CloudStack installation!"
 echo ""
