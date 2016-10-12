@@ -46,29 +46,40 @@ if [ -e ssvm.sh ];then
 fi
 while true
 do
-  read -p "which version of Cloudstack do you want to install? [4.4/4.5/4.6/4.7/4.8/4.9]: " VERSION
+  echo "-------------------------------------"
+  echo " Version Menu "
+  echo "-------------------------------------"
+  echo "[1] 4.4"
+  echo "[2] 4.5"
+  echo "[3] 4.6"
+  echo "[4] 4.7"
+  echo "[5] 4.8"
+  echo "[6] 4.9"
+  echo "======================="
+  read -p "Enter your menu choice [1-6]: " VERSION
+#  read -p "which version of Cloudstack do you want to install? [4.4/4.5/4.6/4.7/4.8/4.9]: " VERSION
     case $VERSION in 
-      [4.4]* ) sed -i 's/CSVERSION/4.4/g' prepare.sh 
+      [1]* ) sed -i 's/CSVERSION/4.4/g' prepare.sh 
                sed -i 's/TMPLVERSION/GA-4.4.4-2015-07-10/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.4/g' cs_inst_quiet.sh 
                break;;
-      [4.5]* ) sed -i 's/CSVERSION/4.5/g' prepare.sh 
+      [2]* ) sed -i 's/CSVERSION/4.5/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.5/g' cs_inst_quiet.sh
                sed -i 's/PATHVERSION/4.5/g' cs_inst_quiet.sh 
                break;;
-      [4.6]* ) sed -i 's/CSVERSION/4.6/g' prepare.sh 
+      [3]* ) sed -i 's/CSVERSION/4.6/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
-      [4.7]* ) sed -i 's/CSVERSION/4.7/g' prepare.sh 
+      [4]* ) sed -i 's/CSVERSION/4.7/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
-      [4.8]* ) sed -i 's/CSVERSION/4.8/g' prepare.sh 
+      [5]* ) sed -i 's/CSVERSION/4.8/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
-      [4.9]* ) sed -i 's/CSVERSION/4.9/g' prepare.sh 
+      [6]* ) sed -i 's/CSVERSION/4.9/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
