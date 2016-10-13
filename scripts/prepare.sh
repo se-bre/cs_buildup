@@ -8,7 +8,7 @@ TNR=1
 #
 echo ""
 echo "changing root password"
-echo "password" |passwd --stdin
+echo root:password | chpasswd
 echo ""
 echo "creating hostfile and hostname"
 echo ""
