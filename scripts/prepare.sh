@@ -1,7 +1,11 @@
 #!/bin/bash
 #
+apt-get install ipcalc
+#
 IPADDR=$(/sbin/ip addr show eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d'/' -f1)
 GTW=$(ip r | head -n1 | awk '{print $3}')
+GET_PUB_NET=$(ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}')
+NMASK=$(ipcalc $GET_PUB_NET | grep -i netmask | awk '{print $2}') 
 TNR=1
 #
 echo ""
@@ -157,7 +161,7 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet static
         address $IPADDR
-        netmask 255.255.0.0
+        netmask $NMASK
         gateway $GTW
         dns-nameservers 8.8.8.8
 
