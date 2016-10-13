@@ -141,10 +141,29 @@ do
   esac
 done
 echo ""
+echo "after the next steps the system will reboot to configure the cloudstack advanced zone"
 echo ""
-echo "after the reboot you can start to configure cloudstack: "
+echo "this could take up to 10min"
+echo "afterwards you can start to use cloudstack: "
+echo ""
 echo "$IPADDR:8080/client"
 echo ""
 echo "Username: admin"
 echo "Password: password"
 echo ""
+while true
+do
+  read -p "configure cloudstack advanced zone? [y/n]: " ADVZONE
+    case $ADVZONE in
+      [yY]* ) source cloudmonkey.sh
+              break;;
+      [nN]* ) echo ""
+              echo "nothing done!"
+              echo "you have to configure cloudstack on your own"
+              echo ""
+              break;;
+      * )     echo ""
+              echo "Just enter Y or N, please.";;
+  esac
+done
+
