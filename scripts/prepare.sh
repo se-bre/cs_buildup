@@ -2,11 +2,6 @@
 #
 IPADDR=$(/sbin/ip addr show eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d'/' -f1)
 GTW=$(ip r | head -n1 | awk '{print $3}')
-GET_PUB_NET()
-{
-  ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}'
-}
-NMASK=$(ipcalc GET_PUB_NET | grep -i netmask | awk '{print $2}') 
 TNR=1
 #
 echo ""
@@ -162,6 +157,11 @@ echo "" >> config.log
 echo "network config" >> config.log
 echo "" >> config.log
 apt-get install ifenslave -y >> config.log 2>&1
+GET_PUB_NET()
+{
+  ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}'
+}
+NMASK=$(ipcalc GET_PUB_NET | grep -i netmask | awk '{print $2}') 
 cat <<EOF > /etc/network/interfaces
 # The loopback network interface
 auto lo
