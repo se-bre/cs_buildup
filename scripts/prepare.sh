@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-apt-get install ipcalc
-#
 IPADDR=$(/sbin/ip addr show eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d'/' -f1)
 GTW=$(ip r | head -n1 | awk '{print $3}')
 GET_PUB_NET=$(ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}')
@@ -48,6 +46,13 @@ read -p "can we continue? [y/n]: " ANTWORT
 done
 echo "doing upgrade ... this could take a looong time"
 apt-get upgrade -y >> config.log 2>&1
+echo ""
+echo "" >> config.log
+echo "installing IPcalc"
+echo "installing IPcalc" >> config.log
+apt-get install ipcalc -y >> config.log 2>&1
+echo ""
+echo "" >> config.log
 echo "installing NTP"
 echo ""
 echo "" >> config.log
