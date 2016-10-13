@@ -20,7 +20,7 @@ you need all scripts from folder "scripts"
 make them executable
 
 	cd cs_buildup/scripts
-	chmod +x install.sh prepare.sh check.sh cs_inst_quiet.sh ssvm.sh
+	chmod +x install.sh prepare.sh check.sh cs_inst_quiet.sh ssvm.sh cloudmonkey.sh zone_setup.sh
 
 execute just the "install.sh" as root!  
 
