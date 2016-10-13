@@ -7,6 +7,8 @@ NMASK=$(ipcalc $GET_PUB_NET | grep -i netmask | awk '{print $2}')
 TNR=1
 #
 echo ""
+echo "changing root password"
+echo "password" |passwd --stdin
 echo ""
 echo "creating hostfile and hostname"
 echo ""
