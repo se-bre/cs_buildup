@@ -1,8 +1,10 @@
 # Cloudstack buildup - bash script
 
+### do not use this for production - just for testing (use in a VM!)  
+
 **OS:** Ubuntu 14.04  
 **Cloudstack Version:** 4.4 - 4.9 (latest subversion)  
-**Virtualisation:** KVM  
+**Virtualisation:** KVM (you need nested virtualisation on your Host - otherwise you will get an error adding the host to Cloudstack)    
 
 This script will build up an fully working Cloudstack.  
 You will have the Cloudstack Management, Cloudstack Agent, NFS Server, MySQL Server, KVM on one host.  
