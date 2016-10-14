@@ -43,7 +43,7 @@ cloudmonkey update configuration name=host value=172.17.1.1 >> config.log
 cloudmonkey update configuration name=management.network.cidr value=172.17.0.0/16 >> config.log
 echo ""
 sed -i 's/exit\ 0/\ /g' /etc/rc.local
-echo "`pwd`/zone_setup.sh > /dev/null" >> /etc/rc.local
+echo "`pwd`/zone_setup.sh >> `pwd`/config.log" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 ###
 echo "restart System"

@@ -1,11 +1,31 @@
 #!/bin/bash
 #
-echo ""
-echo "get the link-local ip of the ssvm from Cloudstack UI!"
-echo -en "enter the link-local IP of the secondary-storage VM: "
-echo -en '\E[32m'
-read SSVMIP
-tput sgr0
+echo "wait for ssvm bootup"
+VMUP=$(virsh list | grep s | awk '{print $3}')
+ 
+while test ["$VMUP" != "running"]
+do
+  sleep 5
+  echo "Trying again..."
+  $VMUP
+done
+ 
+SSVMIP=$(cloudmonkey list systemvms systemvmtype=secondarystoragevm | grep linklocalip | awk '{print $3}')
+ 
+ssh $SSVMIP
+while test $? -gt 0
+do
+   sleep 5
+   echo "Trying again..."
+   ssh $SSVMIP
+done
+
+#echo ""
+#echo "get the link-local ip of the ssvm from Cloudstack UI!"
+#echo -en "enter the link-local IP of the secondary-storage VM: "
+#echo -en '\E[32m'
+#read SSVMIP
+#tput sgr0
 echo ""
 echo -e '\E[31m'"SSVM preparation"
 tput sgr0
