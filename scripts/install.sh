@@ -59,27 +59,27 @@ do
   read -p "Enter your menu choice [1-6]: " VERSION
 #  read -p "which version of Cloudstack do you want to install? [4.4/4.5/4.6/4.7/4.8/4.9]: " VERSION
     case $VERSION in 
-      [1]* ) sed -i 's/CSVERSION/4.4/g' prepare.sh 
+      [1] ) sed -i 's/CSVERSION/4.4/g' prepare.sh 
                sed -i 's/TMPLVERSION/GA-4.4.4-2015-07-10/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.4/g' cs_inst_quiet.sh 
                break;;
-      [2]* ) sed -i 's/CSVERSION/4.5/g' prepare.sh 
+      [2] ) sed -i 's/CSVERSION/4.5/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.5/g' cs_inst_quiet.sh
                sed -i 's/PATHVERSION/4.5/g' cs_inst_quiet.sh 
                break;;
-      [3]* ) sed -i 's/CSVERSION/4.6/g' prepare.sh 
+      [3] ) sed -i 's/CSVERSION/4.6/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
-      [4]* ) sed -i 's/CSVERSION/4.7/g' prepare.sh 
+      [4] ) sed -i 's/CSVERSION/4.7/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
-      [5]* ) sed -i 's/CSVERSION/4.8/g' prepare.sh 
+      [5] ) sed -i 's/CSVERSION/4.8/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
-      [6]* ) sed -i 's/CSVERSION/4.9/g' prepare.sh 
+      [6] ) sed -i 's/CSVERSION/4.9/g' prepare.sh 
                sed -i 's/TMPLVERSION/4.6.0/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.6/g' cs_inst_quiet.sh 
                break;;
@@ -91,9 +91,9 @@ while true
 do
   read -p "prepare the host for Cloudstack installation? [y/n]: " PREPARE
     case $PREPARE in
-      [yY]* ) source prepare.sh
+      [yY] ) source prepare.sh
               break;;
-      [nN]* ) echo ""
+      [nN] ) echo ""
               echo "nothing done!"
               echo "you have to prepare the host on your own"
               break;;
@@ -107,11 +107,11 @@ while true
 do
   read -p "install Cloudstack? [y/n]: " INSTCS
     case $INSTCS in
-      [yY]* ) source cs_inst_quiet.sh
+      [yY] ) source cs_inst_quiet.sh
               echo ""
               echo "ok - all done!"
               break;;
-      [nN]* ) echo ""
+      [nN] ) echo ""
               echo "nothing done!"
               echo "you have to install Cloudstack on your own"
               echo ""
@@ -127,9 +127,9 @@ while true
 do
   read -p "check all installation steps? [y/n]: " CHECKIT
     case $CHECKIT in
-      [yY]* ) source check.sh
+      [yY] ) source check.sh
               break;;
-      [nN]* ) echo ""
+      [nN] ) echo ""
               echo "nothing done!"
               echo "you have to check all installation steps on your own"
               echo ""
@@ -155,9 +155,9 @@ while true
 do
   read -p "configure cloudstack advanced zone? [y/n]: " ADVZONE
     case $ADVZONE in
-      [yY]* ) source cloudmonkey.sh
+      [yY] ) source cloudmonkey.sh
               break;;
-      [nN]* ) echo ""
+      [nN] ) echo ""
               echo "nothing done!"
               echo "you have to configure cloudstack on your own"
               echo ""

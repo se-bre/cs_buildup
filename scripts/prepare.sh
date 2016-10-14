@@ -36,9 +36,9 @@ while true
 do
 read -p "can we continue? [y/n]: " ANTWORT
   case $ANTWORT in
-    [yY]* ) echo "OK - lets go ..."
+    [yY] ) echo "OK - lets go ..."
             break;;
-    [nN]* ) echo "nothing done!"
+    [nN] ) echo "nothing done!"
             exit;;
     * )     echo ""
             echo "Please, just enter Y or N, please.";;
