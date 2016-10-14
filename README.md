@@ -12,7 +12,7 @@ You need at least:
  - 4GB RAM  
  - 2 disks:
    - one approx. 5 - 10 GB (root disk)
-   - one additional disk for the NFS Storage (primary, secondary, template) approx. 30GB or more
+   - one additional disk for the NFS Storage (primary, secondary, template) approx. 30GB or more - no partitions! no FS! - the scripts will do the needfull  
 
 ### Howto
 
