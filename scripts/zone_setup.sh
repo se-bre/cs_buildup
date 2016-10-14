@@ -9,9 +9,6 @@ cd $FINDSCR/scripts/
 echo "remove rc.local entry to start this script"
 /bin/sed -i '/zone_setup.sh/d' /etc/rc.local
 
-echo "wait 60 seconds for cloudstack to start..."
-/bin/sleep 60
-
 echo "starting advanced zone setup"
 cli=/usr/local/bin/cloudmonkey
 dns_ext=8.8.8.8
@@ -155,6 +152,4 @@ echo ""
 $cli update zone allocationstate=Enabled id=$zone_id
 echo "Advanced zone deloyment completed!"
 echo ""
-
-source ssvm.sh > config.log
 
