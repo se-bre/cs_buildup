@@ -2,13 +2,17 @@
 
 **OS:** Ubuntu 14.04  
 **Cloudstack Version:** 4.4 - 4.9 (latest subversion)  
+**Virtualisation:** KVM  
 
 This script will build up an fully working Cloudstack.  
 You will have the Cloudstack Management, Cloudstack Agent, NFS Server, MySQL Server, KVM on one host.  
 
-You need 2 disks:
- - one approx. 5 - 10 GB (root disk)
- - one additional disk for the NFS Storage (primary, secondary, template) approx. 30GB or more
+You need at least:  
+ - 2 Cores  
+ - 4GB RAM  
+ - 2 disks:
+   - one approx. 5 - 10 GB (root disk)
+   - one additional disk for the NFS Storage (primary, secondary, template) approx. 30GB or more
 
 ### Howto
 
