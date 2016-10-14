@@ -71,6 +71,7 @@ echo ""
 
 echo "enable forwarding"
 echo "1" > /proc/sys/net/ipv4/conf/all/forwarding
+sed -i '/net.ipv4.conf.all.forwarding/d' /etc/sysctl.conf
 echo "net.ipv4.conf.all.forwarding = 1" >> /etc/sysctl.conf
 echo -e '\E[32m'"[ OK ]"
 
