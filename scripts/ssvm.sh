@@ -3,7 +3,7 @@
 echo "wait for ssvm bootup"
 
 /usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}' 
-while test ![[$? != "running"]
+while test ![[$? = "running"]
 do
   /bin/sleep 5
   echo "Trying again..."
@@ -12,12 +12,12 @@ done
  
 SSVMIP=$(/usr/local/bin/cloudmonkey list systemvms systemvmtype=secondarystoragevm | /bin/grep linklocalip | /usr/bin/awk '{print $3}')
  
-/usr/bin/ssh $SSVMIP -p 3922
+/usr/bin/ssh $SSVMIP -p 3922 -o StrictHostKeyChecking=no
 while test ![[$? = "Permission denied (publickey)."]] 
 do
    /bin/sleep 5
    echo "Trying again..."
-   /usr/bin/ssh $SSVMIP -p 3922
+   /usr/bin/ssh $SSVMIP -p 3922 -o StrictHostKeyChecking=no
 done
 
 #echo ""

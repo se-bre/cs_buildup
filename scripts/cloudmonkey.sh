@@ -45,8 +45,20 @@ echo ""
 sed -i 's/exit\ 0/\ /g' /etc/rc.local
 echo "`pwd`/zone_setup.sh >> `pwd`/config.log" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
-###
-echo "restart System"
-echo ""
-shutdown -r now
+
+while true
+do
+  read -p "We have to reboot the system! Do the reboot now? [y/n]: " RBOOT
+    case $RBOOT in
+      [yY] ) echo "restart System"
+              shutdown -r now
+              break;;
+      [nN] ) echo ""
+              echo "nothing done!"
+              echo "you have to reboot the host on your own"
+              break;;
+      * )     echo ""
+              echo "Just enter Y or N, please.";;
+  esac
+done
 

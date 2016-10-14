@@ -107,9 +107,9 @@ echo ""
 #net_id=`$cli create network zoneid=$zone_id name=guestNetworkForBasicZone displaytext=guestNetworkForBasicZone networkofferingid=$netoff_id | grep ^id\ = | awk '{print $3}'`
 #echo "Created network $net_id for zone" $zone_id
 
-#domain_id=`$cli list domains name=root | grep ^id\ = | awk '{print $3}'`
+zone_id=`$cli list zones name=MyZone | grep ^id\ = | awk '{print $3}'`
 #$cli create vlaniprange domainid=$domain_id forvirtualnetwork=True gateway=$pub_gw  netmask=$pub_nmask startip=$pub_start  endip=$pub_end
-$cli create vlaniprange forvirtualnetwork=True gateway=$pub_gw  netmask=$pub_nmask startip=$pub_start  endip=$pub_end
+$cli create vlaniprange zoneid=$zone_id forvirtualnetwork=True gateway=$pub_gw  netmask=$pub_nmask startip=$pub_start  endip=$pub_end
 echo "Created public ip Range"
 echo "======================================="
 echo ""
