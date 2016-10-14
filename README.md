@@ -30,11 +30,7 @@ answer all the questions (if you don´t know - just answer with yes)
 
 ---
 
-reboot the system   
-
----
-
-configure cloudstack per <IP of the system>:8080/client  
+configure cloudstack per IP_of_the_System:8080/client  
 
 Username: admin  
 Password: password  
