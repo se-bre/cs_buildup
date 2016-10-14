@@ -1,5 +1,17 @@
 #!/bin/bash
 #
+echo "search for script folder..."
+FINDSCR=$(/usr/bin/find / -name cs_buildup)
+ 
+echo "change to script folder ..."
+cd $FINDSCR/scripts/
+ 
+echo "remove rc.local entry to start this script"
+/bin/sed -i '/ssvm.sh/d' /etc/rc.local
+ 
+echo "wait 60 seconds for advanced zone configuration..."
+/bin/sleep 60
+
 echo "wait for ssvm bootup"
 
 /usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}' 
