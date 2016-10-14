@@ -42,10 +42,12 @@ cloudmonkey sync >> config.log
 cloudmonkey update configuration name=host value=172.17.1.1 >> config.log
 cloudmonkey update configuration name=management.network.cidr value=172.17.0.0/16 >> config.log
 echo ""
+echo "put scripts to rc.local ..."
 sed -i 's/exit\ 0/\ /g' /etc/rc.local
 echo "`pwd`/zone_setup.sh >> `pwd`/config.log" >> /etc/rc.local
+echo "`pwd`/ssvm.sh >> `pwd`/ssvm.log" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
-
+echo ""
 while true
 do
   read -p "We have to reboot the system! Do the reboot now? [y/n]: " RBOOT
