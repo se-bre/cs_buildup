@@ -1,23 +1,23 @@
 #!/bin/bash
 #
 echo "wait for ssvm bootup"
-VMUP=$(virsh list | grep s | awk '{print $3}')
- 
-while test ["$VMUP" != "running"]
+
+/usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}' 
+while test ![[$? != "running"]
 do
-  sleep 5
+  /bin/sleep 5
   echo "Trying again..."
-  $VMUP
+  /usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}'
 done
  
-SSVMIP=$(cloudmonkey list systemvms systemvmtype=secondarystoragevm | grep linklocalip | awk '{print $3}')
+SSVMIP=$(/usr/local/bin/cloudmonkey list systemvms systemvmtype=secondarystoragevm | /bin/grep linklocalip | /usr/bin/awk '{print $3}')
  
-ssh $SSVMIP
-while test $? -gt 0
+/usr/bin/ssh $SSVMIP -p 3922
+while test ![[$? = "Permission denied (publickey)."]] 
 do
-   sleep 5
+   /bin/sleep 5
    echo "Trying again..."
-   ssh $SSVMIP
+   /usr/bin/ssh $SSVMIP -p 3922
 done
 
 #echo ""
@@ -30,8 +30,8 @@ echo ""
 echo -e '\E[31m'"SSVM preparation"
 tput sgr0
 echo -n "get the interface on which the link-local ip is set: "
-IPADDR=$(/usr/bin/ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip addr show | grep $SSVMIP")
-LLIF=$(/bin/echo $IPADDR | awk '{print $7}')
+IPADDR=$(/usr/bin/ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip addr show | /bin/grep $SSVMIP")
+LLIF=$(/bin/echo $IPADDR | /usr/bin/awk '{print $7}')
 echo -e '\E[32m'" [ $LLIF ]"
 tput sgr0
 echo -n "set all other interfaces down: "
@@ -40,7 +40,7 @@ for i in $(/bin/echo $ALLIF); do /usr/bin/ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SS
 echo -e '\E[32m'"[ OK ]"
 tput sgr0
 echo -n "get the link-local ip of the hypervisor: "
-OWNLL=$(ip addr show | grep 169.254 | awk '{print $2}' | cut -d"/" -f1)
+OWNLL=$(ip addr show | /bin/grep 169.254 | /usr/bin/awk '{print $2}' | cut -d"/" -f1)
 echo -e '\E[32m'" [ $OWNLL ]"
 tput sgr0
 echo -n "set the default route on SSVM: "
@@ -52,7 +52,7 @@ echo -e '\E[31m'"Hypervisor preparation"
 tput sgr0
 echo "nat all traffic from VM on HV"
 echo -n "check if iptables-rule is already there: "
-MASKON=$(iptables -L -t nat | grep -i masquer | grep anywhere | awk '{ print $1 }')
+MASKON=$(iptables -L -t nat | /bin/grep -i masquer | /bin/grep anywhere | /usr/bin/awk '{ print $1 }')
 if [ "$MASKON" == "MASQUERADE" ]; then
   echo -e '\E[32m'"masquerading already configured"
   else

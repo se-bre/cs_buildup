@@ -1,31 +1,31 @@
 #!/bin/bash
 
 echo "search for script folder..."
-FINDSCR=$(find / -name cs_buildup)
+FINDSCR=$(/usr/bin/find / -name cs_buildup)
 
 echo "change to script folder ..."
 cd $FINDSCR/scripts/
 
 echo "remove rc.local entry to start this script"
-sed -i '/zone_setup.sh/d' /etc/rc.local
+/bin/sed -i '/zone_setup.sh/d' /etc/rc.local
 
 echo "wait 60 seconds for cloudstack to start..."
-sleep 60
+/bin/sleep 60
 
 echo "starting advanced zone setup"
-cli=cloudmonkey
+cli=/usr/local/bin/cloudmonkey
 dns_ext=8.8.8.8
-dns_int=$(ip r | head -n1 | awk '{print $3}')
+dns_int=$(/sbin/ip r | /usr/bin/head -n1 | /usr/bin/awk '{print $3}')
 gw=172.17.1.1
 nmask=255.255.0.0
 hpvr=KVM
 pod_start=172.17.3.10
 pod_end=172.17.3.100
-pub_gw=$(ip r | head -n1 | awk '{print $3}')
-get_pub_ip=$(ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}')
-pub_nmask=$(ipcalc $get_pub_ip | grep -i netmask | awk '{print $2}')
-pub_start=$(ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}' | cut -d"." -f1,2,3).240
-pub_end=$(ip a show dev eth0 | grep inet | head -n1 | awk '{print $2}' | cut -d"." -f1,2,3).250
+pub_gw=$(/sbin/ip r | /usr/bin/head -n1 | /usr/bin/awk '{print $3}')
+get_pub_ip=$(/sbin/ip a show dev eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}')
+pub_nmask=$(/usr/bin/ipcalc $get_pub_ip | /bin/grep -i netmask | /usr/bin/awk '{print $2}')
+pub_start=$(/sbin/ip a show dev eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d"." -f1,2,3).240
+pub_end=$(/sbin/ip a show dev eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d"." -f1,2,3).250
 #vlan_start=10.147.28.235
 #vlan_end=10.147.28.254
  
