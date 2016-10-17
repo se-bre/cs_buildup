@@ -9,9 +9,6 @@ cd $FINDSCR/scripts/
 echo "remove rc.local entry to start this script"
 /bin/sed -i '/ssvm.sh/d' /etc/rc.local
  
-echo "wait 60 seconds for advanced zone configuration..."
-/bin/sleep 60
-
 echo "wait for ssvm bootup"
 
 VMUP=$(/usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}')
@@ -39,19 +36,18 @@ echo ""
 echo -e '\E[31m'"SSVM preparation"
 tput sgr0
 
-echo -n "get the interface on which the link-local ip is set: "
-IPADDR=$(/usr/bin/ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip addr show | /bin/grep $SSVMIP")
-LLIF=$(/bin/echo $IPADDR | /usr/bin/awk '{print $7}')
-echo -e '\E[32m'" [ $LLIF ]"
+echo -n "get the link-local ip of the hypervisor: "
+OWNLL=$(ip addr show | grep 169.254 | awk '{print $2}' | cut -d"/" -f1)
+echo -e '\E[32m'" [ $OWNLL ]"
 tput sgr0
 
 echo -n "delete default route on SSVM: "
 ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip route del default" > /dev/null 2>&1
 echo -e '\E[32m'"[ OK ]"
-
 tput sgr0
+
 echo -n "set the default route on SSVM: "
-ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip route add default via 172.17.1.1" > /dev/null 2>&1
+ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip route add default via $OWNLL" > /dev/null 2>&1
 echo -e '\E[32m'"[ OK ]"
 tput sgr0
 
