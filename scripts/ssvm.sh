@@ -14,22 +14,25 @@ echo "wait 60 seconds for advanced zone configuration..."
 
 echo "wait for ssvm bootup"
 
-/usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}' 
-while test ![[$? = "running"]
+VMUP=$(/usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}')
+while [[ "$VMUP" != "running" ]]
 do
   /bin/sleep 5
-  echo "Trying again..."
-  /usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}'
+  echo "SSVM not running - trying again..."
+  VMUP=$(/usr/bin/virsh list | /bin/grep s | /usr/bin/awk '{print $3}')
 done
- 
+
+echo ""
+echo "SSVM is now running - try to connect per SSH"
+echo ""
 SSVMIP=$(/usr/local/bin/cloudmonkey list systemvms systemvmtype=secondarystoragevm | /bin/grep linklocalip | /usr/bin/awk '{print $3}')
  
-/usr/bin/ssh $SSVMIP -p 3922 -o StrictHostKeyChecking=no
-while test ![[$? = "Permission denied (publickey)."]] 
+VM_SSH=$(/usr/bin/ssh $SSVMIP -p 3922 -o StrictHostKeyChecking=no  2>&1 | tail -n1 | awk '{print $2}')
+while [[ "$VM_SSH" != "denied" ]]
 do
    /bin/sleep 5
-   echo "Trying again..."
-   /usr/bin/ssh $SSVMIP -p 3922 -o StrictHostKeyChecking=no
+   echo "SSH login not possible - trying again..."
+   VM_SSH=$(/usr/bin/ssh $SSVMIP -p 3922 -o StrictHostKeyChecking=no  2>&1 | tail -n1 | awk '{print $2}')
 done
 
 echo ""
@@ -42,7 +45,7 @@ LLIF=$(/bin/echo $IPADDR | /usr/bin/awk '{print $7}')
 echo -e '\E[32m'" [ $LLIF ]"
 tput sgr0
 
-echo -n "delete default route on SSVM"
+echo -n "delete default route on SSVM: "
 ssh -p 3922 -i ~/.ssh/id_rsa.cloud $SSVMIP "ip route del default" > /dev/null 2>&1
 echo -e '\E[32m'"[ OK ]"
 
@@ -69,7 +72,7 @@ fi
 tput sgr0
 echo ""
 
-echo "enable forwarding"
+echo -n "enable forwarding: "
 echo "1" > /proc/sys/net/ipv4/conf/all/forwarding
 sed -i '/net.ipv4.conf.all.forwarding/d' /etc/sysctl.conf
 echo "net.ipv4.conf.all.forwarding = 1" >> /etc/sysctl.conf
