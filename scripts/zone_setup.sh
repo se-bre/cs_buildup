@@ -4,7 +4,7 @@ echo "search for script folder..."
 FINDSCR=$(/usr/bin/find / -name cs_buildup)
 
 echo "change to script folder ..."
-cd $FINDSCR/scripts/
+cd `echo $FINDSCR`/scripts/
 
 echo "remove rc.local entry to start this script"
 /bin/sed -i '/zone_setup.sh/d' /etc/rc.local
