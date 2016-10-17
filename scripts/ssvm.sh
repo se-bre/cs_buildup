@@ -1,5 +1,9 @@
 #!/bin/bash
 #
+echo ""
+echo "SSVM Script - configure Secondary Storage VM"
+echo ""
+
 echo "search for script folder..."
 FINDSCR=$(/usr/bin/find / -name cs_buildup)
  
