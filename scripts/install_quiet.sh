@@ -60,8 +60,7 @@ do
 #  read -p "which version of Cloudstack do you want to install? [4.4/4.5/4.6/4.7/4.8/4.9]: " VERSION
     case $VERSION in 
       [1] ) sed -i 's/CSVERSION/4.4/g' prepare.sh 
-#               sed -i 's/TMPLVERSION/GA-4.4.4-2015-07-10/g' cs_inst_quiet.sh 
-               sed -i 's/TMPLVERSION/4.4.1/g' cs_inst_quiet.sh 
+               sed -i 's/TMPLVERSION/4.4.1-7/g' cs_inst_quiet.sh 
                sed -i 's/PATHVERSION/4.4/g' cs_inst_quiet.sh 
                break;;
       [2] ) sed -i 's/CSVERSION/4.5/g' prepare.sh 
