@@ -45,7 +45,7 @@ echo ""
 echo "put scripts to rc.local ..."
 sed -i 's/exit\ 0/\ /g' /etc/rc.local
 echo "`pwd`/zone_setup.sh >> `pwd`/config.log" >> /etc/rc.local
-echo "`pwd`/ssvm.sh >> `pwd`/config.log" >> /etc/rc.local
+#echo "`pwd`/ssvm.sh >> `pwd`/config.log" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 echo ""
 while true

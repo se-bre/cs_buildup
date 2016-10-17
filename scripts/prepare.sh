@@ -169,14 +169,8 @@ iface lo inet loopback
 
 # The primary network interface
 auto eth0
-iface eth0 inet static
-        address $IPADDR
-        netmask $NMASK
-        gateway $GTW
-        dns-nameservers 8.8.8.8
+iface eth0 inet manual
 
-EOF
-cat <<EOF >> /etc/network/interfaces
 auto eth0.101
         iface eth0.101 inet manual
         vlan-raw-device eth0
@@ -193,8 +187,12 @@ auto eth0.100
         vlan-raw-device eth0
 
 auto public
-iface public inet manual
-        bridge_ports eth0.100
+iface public inet static
+        bridge_ports eth0
+        address $IPADDR
+        netmask $NMASK
+        gateway $GTW
+        dns-nameservers 8.8.8.8
         bridge_fd 5
         bridge_stp yes
         bridge_maxwait 1
@@ -204,7 +202,6 @@ iface eth0.103 inet manual
         vlan-raw-device eth0
 
 auto storage
-#iface storage inet manual
 iface storage inet static
         address 172.18.1.$TNR
         netmask 255.255.0.0
@@ -212,34 +209,17 @@ iface storage inet static
         bridge_fd 5
         bridge_stp yes
 
-#auto storage-hv
-#iface storage-hv inet static
-#        address 172.18.1.$TNR
-#        netmask 255.255.0.0
-#        bridge_ports eth0.103
-#        bridge_fd 5
-#        bridge_stp yes
-
 auto eth0.102
 iface eth0.102 inet manual
         vlan-raw-device eth0
 
 auto mgmt
-#iface mgmt inet manual
 iface mgmt inet static
         address 172.17.1.$TNR
 	netmask 255.255.0.0
         bridge_ports eth0.102
         bridge_fd 5
         bridge_stp yes
-
-#auto mgmt-hv
-#iface mgmt-hv inet static
-#        address 172.17.1.$TNR
-#	netmask 255.255.0.0
-#        bridge_ports eth0.102
-#        bridge_fd 5
-#        bridge_stp yes
 EOF
 echo ""
 echo "prepare SSHD"

@@ -34,7 +34,7 @@ sec_storage=nfs://172.18.1.1/mnt/secondary
 prm_storage=nfs://172.18.1.1/mnt/primary
 
 echo "Start Cloudstack configuration of advanced zone" 
-zone_id=`$cli create zone dns1=$dns_ext internaldns1=$dns_int name=MyZone networktype=Advanced isolationmethods=VLAN | grep ^id\ = | awk '{print $3}'`
+zone_id=`$cli create zone dns1=$dns_ext internaldns1=$dns_int name=MyZone networktype=Advanced isolationmethods=VLAN guestcidraddress=172.26.0.0/16 | grep ^id\ = | awk '{print $3}'`
 echo ""
 echo "Created zone" $zone_id
 echo "======================================="
