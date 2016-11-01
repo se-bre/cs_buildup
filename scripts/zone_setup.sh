@@ -19,10 +19,10 @@ hpvr=KVM
 pod_start=172.17.3.10
 pod_end=172.17.3.100
 pub_gw=$(/sbin/ip r | /usr/bin/head -n1 | /usr/bin/awk '{print $3}')
-get_pub_ip=$(/sbin/ip a show dev eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}')
+get_pub_ip=$(/sbin/ip a show dev public | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}')
 pub_nmask=$(/usr/bin/ipcalc $get_pub_ip | /bin/grep -i netmask | /usr/bin/awk '{print $2}')
-pub_start=$(/sbin/ip a show dev eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d"." -f1,2,3).240
-pub_end=$(/sbin/ip a show dev eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d"." -f1,2,3).250
+pub_start=$(/sbin/ip a show dev public | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d"." -f1,2,3).240
+pub_end=$(/sbin/ip a show dev public | /bin/grep inet | /usr/bin/head -n1 | /usr/bin/awk '{print $2}' | /usr/bin/cut -d"." -f1,2,3).250
 #vlan_start=10.147.28.235
 #vlan_end=10.147.28.254
  
