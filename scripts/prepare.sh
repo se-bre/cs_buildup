@@ -13,6 +13,7 @@ echo ""
 cat <<EOF > /etc/hosts
 127.0.0.1 localhost
 127.0.1.1 cs$TNR.local	cs$TNR
+$IPADDR	 cs$TNR.local	cs$TNR
 172.27.1.$TNR hv01
 EOF
 echo cs$TNR > /etc/hostname
