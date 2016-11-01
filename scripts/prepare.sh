@@ -10,6 +10,8 @@ echo root:password | chpasswd
 echo ""
 echo "creating hostfile and hostname"
 echo ""
+hostname cs$TNR
+domainname local
 cat <<EOF > /etc/hosts
 127.0.0.1 localhost
 127.0.1.1 cs$TNR.local	cs$TNR
