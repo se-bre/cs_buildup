@@ -1,4 +1,4 @@
-# Cloudstack buildup - bash script
+# Cloudstack buildup - bash script V1.0
 
 ### do not use this for production - just for testing (use in a VM!)  
 
@@ -46,7 +46,6 @@ Password: password
 ### more things to say
 
  - the bigger the host the more you can build up (2core + 4GB is min) ;)  
- - you can´t access the VMs you build up due to routing  
  - if you want to test the Cloudstack Basic Setup skip the "configure cloudstack advanced zone?" step and configure it on your own (maybe i´ll implement this later)  
 
 ---
