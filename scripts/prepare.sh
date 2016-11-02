@@ -4,10 +4,10 @@ IPADDR=$(/sbin/ip addr show eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin
 GTW=$(ip r | head -n1 | awk '{print $3}')
 TNR=1
 #
-echo -e "\nchanging root password"
+echo -e "\nchanging root password"|tee config.log
 echo root:password | chpasswd
 
-echo -e "\ncreating hostfile and hostname"
+echo -e "\ncreating hostfile and hostname"|tee -a config.log
 hostname cs$TNR
 domainname local
 cat <<EOF > /etc/hosts
@@ -18,28 +18,25 @@ $IPADDR	 cs$TNR.local	cs$TNR
 EOF
 echo cs$TNR > /etc/hostname
 
-echo -e "\nadd Cloudstack Repository"
+echo -e "\nadd Cloudstack Repository"|tee -a config.log
 echo "deb http://cloudstack.apt-get.eu/ubuntu trusty CSVERSION" > /etc/apt/sources.list.d/cloudstack.list
 wget -O - http://cloudstack.apt-get.eu/release.asc|apt-key add -
 
-echo -e "\n"'\E[31m'"\033[1m  please check the config.log file\033[0m"
-tput sgr0
-
-echo -e "\ndoing update ... "
-echo -e '\E[31m'"\033[1m  please check the config.log file\033[0m"
-tput sgr0
+echo -e "\ndoing update ... "|tee -a config.log
 
 CHKUPD=$(apt-get update | tail -n1 2>&1)
 if [ "$CHKUPD" != "Reading package lists..." ]
   then
-	echo -e "\nsomething went wrong while adding the GPG key ... retry\n"
+	echo -e "\nsomething went wrong while adding the GPG key ... retry\n"|tee -a config.log
 	wget http://cloudstack.apt-get.eu/release.asc
 	apt-key add release.asc
 	rm release.asc
 	apt-get update >> config.log 2>&1
   else
-	echo -e "\nupdate apt: [ OK ]\n"
+	echo -e "\nupdate apt: [ OK ]\n"|tee -a config.log
 fi
+echo -e '\E[31m'"\033[1m  please check the config.log file if update run well\033[0m"
+tput sgr0
 
 echo -e "\nif the update of the repositorys run well we can proceed"
 while true
