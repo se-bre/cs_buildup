@@ -47,5 +47,6 @@ Password: password
 
  - the bigger the host the more you can build up (2core + 4GB is min) ;)  
  - if you want to test the Cloudstack Basic Setup skip the "configure cloudstack advanced zone?" step and configure it on your own (maybe i´ll implement this later)  
+ - console proxy not working ... yet
 
 ---
