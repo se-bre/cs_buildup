@@ -1,15 +1,13 @@
 #!/bin/bash
 ##apt-get install python-pip python-dev software-properties-common libffi-dev python-simplejson readline-common python-requests python-pygments python-prettytable python-argcomplete
 ##pip install cloudmonkey
-echo ""
-echo "installing pip"
-echo ""
+
+echo -e "\ninstalling pip\n"
 apt-get install python-pip -y >> config.log
 easy_install --upgrade requests >> config.log
 easy_install --upgrade pygments >> config.log
-echo ""
-echo "installing cloudmonkey"
-echo ""
+
+echo -e "\ninstalling cloudmonkey\n"
 pip install cloudmonkey >> config.log
 mkdir ~/.cloudmonkey >> config.log
 cat <<EOF > ~/.cloudmonkey/config
@@ -35,19 +33,20 @@ secretkey =
 timeout = 3600
 expires = 600
 EOF
-echo ""
-echo "global Cloudstack config"
-echo ""
+
+echo -e "\nglobal Cloudstack config\n"
 cloudmonkey sync >> config.log
 cloudmonkey update configuration name=host value=172.17.1.1 >> config.log
 cloudmonkey update configuration name=management.network.cidr value=172.17.0.0/16 >> config.log
-echo ""
-echo "put scripts to rc.local ..."
+
+echo -en "\nput scripts to rc.local ."
 sed -i 's/exit\ 0/\ /g' /etc/rc.local
+echo -n "."
 echo "`pwd`/zone_setup.sh >> `pwd`/config.log" >> /etc/rc.local
-#echo "`pwd`/ssvm.sh >> `pwd`/config.log" >> /etc/rc.local
+echo -n "."
 echo "exit 0" >> /etc/rc.local
-echo ""
+echo " done"
+
 while true
 do
   read -p "We have to reboot the system! Do the reboot now? [y/n]: " RBOOT

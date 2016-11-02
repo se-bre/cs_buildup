@@ -4,12 +4,10 @@ IPADDR=$(/sbin/ip addr show eth0 | /bin/grep inet | /usr/bin/head -n1 | /usr/bin
 GTW=$(ip r | head -n1 | awk '{print $3}')
 TNR=1
 #
-echo ""
-echo "changing root password"
+echo -e "\nchanging root password"
 echo root:password | chpasswd
-echo ""
-echo "creating hostfile and hostname"
-echo ""
+
+echo -e "\ncreating hostfile and hostname"
 hostname cs$TNR
 domainname local
 cat <<EOF > /etc/hosts
@@ -19,59 +17,47 @@ $IPADDR	 cs$TNR.local	cs$TNR
 172.27.1.$TNR hv01
 EOF
 echo cs$TNR > /etc/hostname
-echo "add Cloudstack Repository"
-echo ""
-#echo "deb http://cloudstack.apt-get.eu/ubuntu trusty 4.5" > /etc/apt/sources.list.d/cloudstack.list
+
+echo -e "\nadd Cloudstack Repository"
 echo "deb http://cloudstack.apt-get.eu/ubuntu trusty CSVERSION" > /etc/apt/sources.list.d/cloudstack.list
 wget -O - http://cloudstack.apt-get.eu/release.asc|apt-key add -
-echo ""
-echo -e '\E[31m'"\033[1m  please check the config.log file\033[0m"
+
+echo -e "\n"'\E[31m'"\033[1m  please check the config.log file\033[0m"
 tput sgr0
-echo ""
-echo "doing update ... "
-echo ""
+
+echo -e "\ndoing update ... "
 echo -e '\E[31m'"\033[1m  please check the config.log file\033[0m"
 tput sgr0
 apt-get update >> config.log 2>&1
-echo ""
-echo "if the update of the repositorys run well we can proceed"
+
+echo -e "\nif the update of the repositorys run well we can proceed"
 while true
 do
 read -p "can we continue? [y/n]: " ANTWORT
   case $ANTWORT in
-    [yY] ) echo "OK - lets go ..."
+    [yY] ) echo -e "\nOK - lets go ...\n"
             break;;
-    [nN] ) echo "nothing done!"
+    [nN] ) echo -e "\nnothing done!\n"
             exit;;
-    * )     echo ""
-            echo "Please, just enter Y or N, please.";;
+    * )    echo -e "\nPlease, just enter Y or N, please.";;
   esac
 done
-echo "doing upgrade ... this could take a looong time"
+
+echo -e "\ndoing upgrade ... this could take a looong time"
 apt-get upgrade -y >> config.log 2>&1
-echo ""
-echo "" >> config.log
-echo "installing IPcalc"
-echo "installing IPcalc" >> config.log
+
+echo -e "\ninstalling IPcalc\n" |tee -a config.log
 apt-get install ipcalc -y >> config.log 2>&1
-echo ""
-echo "" >> config.log
-echo "installing NTP"
-echo ""
-echo "" >> config.log
-echo "installing NTP" >> config.log
-echo "" >> config.log
+
+echo -e "\ninstalling NTP\n"|tee -a config.log
 apt-get install ntp -y >> config.log 2>&1
-echo "installing MySQL Server"
-echo ""
+
+echo -e "\ninstalling MySQL Server\n"|tee -a config.log
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
-echo "" >> config.log
-echo "installing MySQL Server" >> config.log
-echo "" >> config.log
 apt-get install mysql-server -y >> config.log 2>&1
-echo "configuring MySQL"
-echo ""
+
+echo -e "\nconfiguring MySQL\n"
 cat <<EOF > /etc/mysql/conf.d/cloudstack.cnf
 [mysqld]
 innodb_rollback_on_timeout=1
@@ -80,44 +66,39 @@ max_connections=350
 log-bin=mysql-bin
 binlog-format = 'ROW'
 EOF
-echo "Mysql restart"
+
+echo -e "\nMysql restart\n"
 service mysql restart
-echo ""
-echo "configuring sudo"
+
+echo -e "\nconfiguring sudo\n"
 echo 'Defaults:cloud !requiretty' > /etc/sudoers.d/cloudstack-tty
 chmod 440 /etc/sudoers.d/cloudstack-tty
-echo ""
-echo "configuring FS"
-echo ""
-echo "step 1 - creating mountpoints"
+
+echo -e "\nconfiguring FS\n\nstep 1 - creating mountpoints"|tee -a config.log
 mkdir -p /mnt/primary
 mkdir -p /mnt/secondary
 mkdir -p /mnt/stor-loc
-echo "step 2 - create partitions"
+echo -e "step 2 - create partitions"|tee -a config.log
 parted -s /dev/vdb mktable msdos >> config.log 2>&1
 parted /dev/vdb mkpart primary 1049kB 20% >> config.log 2>&1
 parted /dev/vdb mkpart primary 21% 60% >> config.log 2>&1
 parted /dev/vdb mkpart primary 61% 100% >> config.log 2>&1
-echo "step 3 - create FS"
+echo "step 3 - create FS"|tee -a config.log
 mkfs.ext4 -m0 -L stor-loc /dev/vdb1 >> config.log 2>&1
 mkfs.ext4 -m0 -L primary /dev/vdb2 >> config.log 2>&1
 mkfs.ext4 -m0 -L secondary /dev/vdb3 >> config.log 2>&1
-echo "step 4 - add stuff to fstab"
+echo "step 4 - add stuff to fstab"|tee -a config.log
 cat <<EOF >> /etc/fstab
 /dev/vdb1 /mnt/stor-loc ext4 defaults,noatime,nodiratime 0 0
 /dev/vdb2 /mnt/primary ext4 defaults,noatime,nodiratime 0 0
 /dev/vdb3 /mnt/secondary ext4 defaults,noatime,nodiratime 0 0
 EOF
-echo "step 5 - mount it"
+echo "step 5 - mount it"|tee -a config.log
 mount -a
-echo "step 6 - check it!"
-echo ""
-mount | grep vdb
-echo ""
-echo "installing NFS Server"
-echo "" >> config.log
-echo "installing NFS Server" >> config.log
-echo "" >> config.log
+echo -e "step 6 - check it!\n"|tee -a config.log
+mount | grep vdb |tee -a config.log
+
+echo -e "\ninstalling NFS Server\n"|tee -a config.log
 apt-get install nfs-kernel-server -y >> config.log 2>&1
 cat <<EOF >> /etc/exports
 /mnt/primary  *(rw,async,no_root_squash,no_subtree_check)
@@ -125,18 +106,13 @@ cat <<EOF >> /etc/exports
 EOF
 exportfs -ra
 service nfs-kernel-server restart >> config.log 2>&1
-echo ""
-echo "check it!"
-echo ""
-showmount -e 127.0.0.1
-echo ""
-echo "install libvirt"
-echo "" >> config.log
-echo "install libvirt" >> config.log
-echo "" >> config.log
+echo -e "\ncheck it!\n"|tee -a config.log
+showmount -e 127.0.0.1|tee -a config.log
+
+echo -e "\ninstall libvirt\n"|tee -a config.log
 apt-get install libvirt-bin -y >> config.log 2>&1
-echo ""
-echo "configuring libvirtd"
+
+echo -e "\nconfiguring libvirtd"|tee -a config.log
 cat <<EOF >> /etc/libvirt/libvirtd.conf
 listen_tls = 0
 listen_tcp = 1
@@ -148,17 +124,14 @@ cat <<EOF > /etc/default/libvirt-bin
 start_libvirtd="yes"
 libvirtd_opts="-d -l"
 EOF
-echo ""
-echo "configuring apparmor"
+
+echo -e "\nconfiguring apparmor"|tee -a config.log
 ln -s /etc/apparmor.d/usr.sbin.libvirtd /etc/apparmor.d/disable/
 ln -s /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper /etc/apparmor.d/disable/
 apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd
 apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
-echo ""
-echo "network config"
-echo "" >> config.log
-echo "network config" >> config.log
-echo "" >> config.log
+
+echo -e "\nnetwork config\n"
 apt-get install ifenslave -y >> config.log 2>&1
 GET_PUB_NET()
 {
@@ -224,13 +197,12 @@ iface mgmt inet static
         bridge_fd 5
         bridge_stp yes
 EOF
-echo ""
-echo "prepare SSHD"
+
+echo -e "\nprepare SSHD\n"|tee -a config.log
 sed -i 's/PermitRootLogin\ without-password/PermitRootLogin\ yes/g' /etc/ssh/sshd_config
-echo ""
-echo "load Kernel modules"
+
+echo -e "\nload Kernel modules\n"|tee -a config.log
 echo "kvm" >> /etc/modules
 echo "kvm-intel" >> /etc/modules
-echo ""
-echo "host is prepared for CloudStack installation!"
-echo ""
+
+echo -e "\nhost is prepared for CloudStack installation!\n"|tee -a config.log
