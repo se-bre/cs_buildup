@@ -28,7 +28,18 @@ tput sgr0
 echo -e "\ndoing update ... "
 echo -e '\E[31m'"\033[1m  please check the config.log file\033[0m"
 tput sgr0
-apt-get update >> config.log 2>&1
+
+CHKUPD=$(apt-get update | tail -n1 2>&1)
+if [ "$CHKUPD" != "Reading package lists..." ]
+  then
+	echo -e "\nsomething went wrong while adding the GPG key ... retry\n"
+	wget http://cloudstack.apt-get.eu/release.asc
+	apt-key add release.asc
+	rm release.asc
+	apt-get update >> config.log 2>&1
+  else
+	echo -e "\nupdate apt: [ OK ]\n"
+fi
 
 echo -e "\nif the update of the repositorys run well we can proceed"
 while true
