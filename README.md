@@ -13,8 +13,11 @@ You need at least:
  - 2 Cores  
  - 4GB RAM  
  - 2 disks:
-   - one approx. 5 - 10 GB (root disk)
+   - one approx. 5 - 10 GB (root disk / OS)
    - one additional disk for the NFS Storage (primary, secondary, template) approx. 30GB or more - no partitions! no FS! - the scripts will do the needfull  
+ - one NIC  
+
+---
 
 ### Howto
 
@@ -32,7 +35,7 @@ execute just the "install.sh" as root!
 
 	./install.sh
 
-answer all the questions (if you don´t know - just answer with yes)  
+answer all the questions (if you don´t know - just answer with "y")  
 
 ---
 
