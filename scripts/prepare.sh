@@ -54,18 +54,18 @@ done
 echo -e "\ndoing upgrade ... this could take a looong time"
 apt-get upgrade -y >> config.log 2>&1
 
-echo -e "\ninstalling IPcalc\n" |tee -a config.log
+echo -e "\ninstalling IPcalc" |tee -a config.log
 apt-get install ipcalc -y >> config.log 2>&1
 
-echo -e "\ninstalling NTP\n"|tee -a config.log
+echo -e "\ninstalling NTP"|tee -a config.log
 apt-get install ntp -y >> config.log 2>&1
 
-echo -e "\ninstalling MySQL Server\n"|tee -a config.log
+echo -e "\ninstalling MySQL Server"|tee -a config.log
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
 apt-get install mysql-server -y >> config.log 2>&1
 
-echo -e "\nconfiguring MySQL\n"
+echo -e "\nconfiguring MySQL"
 cat <<EOF > /etc/mysql/conf.d/cloudstack.cnf
 [mysqld]
 innodb_rollback_on_timeout=1
@@ -78,7 +78,7 @@ EOF
 echo -e "\nMysql restart\n"
 service mysql restart
 
-echo -e "\nconfiguring sudo\n"
+echo -e "\nconfiguring sudo"
 echo 'Defaults:cloud !requiretty' > /etc/sudoers.d/cloudstack-tty
 chmod 440 /etc/sudoers.d/cloudstack-tty
 
@@ -106,7 +106,7 @@ mount -a
 echo -e "step 6 - check it!\n"|tee -a config.log
 mount | grep vdb |tee -a config.log
 
-echo -e "\ninstalling NFS Server\n"|tee -a config.log
+echo -e "\ninstalling NFS Server"|tee -a config.log
 apt-get install nfs-kernel-server -y >> config.log 2>&1
 cat <<EOF >> /etc/exports
 /mnt/primary  *(rw,async,no_root_squash,no_subtree_check)
@@ -117,7 +117,7 @@ service nfs-kernel-server restart >> config.log 2>&1
 echo -e "\ncheck it!\n"|tee -a config.log
 showmount -e 127.0.0.1|tee -a config.log
 
-echo -e "\ninstall libvirt\n"|tee -a config.log
+echo -e "\ninstall libvirt"|tee -a config.log
 apt-get install libvirt-bin -y >> config.log 2>&1
 
 echo -e "\nconfiguring libvirtd"|tee -a config.log
@@ -139,7 +139,7 @@ ln -s /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper /etc/apparmor.d/disable/
 apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd
 apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
 
-echo -e "\nnetwork config\n"
+echo -e "\nnetwork config"
 apt-get install ifenslave -y >> config.log 2>&1
 GET_PUB_NET()
 {
@@ -206,10 +206,10 @@ iface mgmt inet static
         bridge_stp yes
 EOF
 
-echo -e "\nprepare SSHD\n"|tee -a config.log
+echo -e "\nprepare SSHD"|tee -a config.log
 sed -i 's/PermitRootLogin\ without-password/PermitRootLogin\ yes/g' /etc/ssh/sshd_config
 
-echo -e "\nload Kernel modules\n"|tee -a config.log
+echo -e "\nload Kernel modules"|tee -a config.log
 echo "kvm" >> /etc/modules
 echo "kvm-intel" >> /etc/modules
 

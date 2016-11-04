@@ -30,5 +30,5 @@ cat <<EOF >> /etc/fstab
 /mnt/stor-loc /usr/share/cloudstack-common/scripts/storage/secondary bind bind 0 0
 EOF
 
-echo -e "install Cloudstack Agent\n"|tee -a config.log
+echo -e "\ninstall Cloudstack Agent\n"|tee -a config.log
 apt-get install cloudstack-agent -y >> config.log 2>&1
