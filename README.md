@@ -7,7 +7,7 @@
 **Virtualisation:** KVM (you need nested virtualisation on your Host - otherwise you will get an error adding the host to Cloudstack)    
 
 This script will build up an fully working Cloudstack.  
-You will have the Cloudstack Management, Cloudstack Agent, NFS Server, MySQL Server, KVM on one host.  
+You will have the Cloudstack Management, Cloudstack Agent, NFS Server, MySQL Server, KVM and a "fully" working (Hints) advanced Zone on one host.  
 
 You need at least:  
  - 2 Cores  
@@ -43,9 +43,9 @@ Password: password
 
 ---
 
-### more things to say
+### Hints
 
- - the bigger the host the more you can build up (2core + 4GB is min) ;)  
+ - the bigger the host the more you are able to build up (2core + 4GB is min) ;)  
  - if you want to test the Cloudstack Basic Setup skip the "configure cloudstack advanced zone?" step and configure it on your own (maybe i´ll implement this later)  
  - console proxy not working ... yet
 
