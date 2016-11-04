@@ -21,12 +21,12 @@ You need at least:
 
 ### Howto
 
-you need all scripts from folder "scripts"  
+clone the repository  
 
 	apt-get install git -y
 	git clone https://github.com/se-bre/cs_buildup.git
 
-make them executable
+make scripts executable
 
 	cd cs_buildup/scripts
 	chmod +x install.sh prepare.sh check.sh cs_inst_quiet.sh ssvm.sh cloudmonkey.sh zone_setup.sh
