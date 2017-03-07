@@ -166,10 +166,6 @@ iface guest inet manual
         bridge_stp yes
         bridge_maxwait 1
 
-auto eth0.100
-        iface eth0.100 inet manual
-        vlan-raw-device eth0
-
 auto public
 iface public inet static
         bridge_ports eth0
